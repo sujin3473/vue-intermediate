@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <todo-header></todo-header>
-    <todo-input></todo-input>
-    <todo-list></todo-list>
+    <todo-input v-on:addTodoItem="addOneItem"></todo-input>
+    <todo-list v-bind:propsdata="todoItems"></todo-list>
     <todo-footer></todo-footer>
   </div>
 </template>
@@ -20,7 +20,32 @@ export default {
     'TodoInput': TodoInput,
     'TodoList': TodoList,
     'TodoFooter': TodoFooter
-  }
+  },
+
+  data: function() {
+    return{
+      todoItems: []
+    }
+  },
+
+  methods: {
+    addOneItem: function() {
+      var obj = {completed: false, item: this.newTodoItem};
+      localStorage.setItem(this.newTodoItem, JSON.stringify(obj));  //객체를 string으로 변환해주는 api
+    }
+  },
+
+  created: function() {
+    if (localStorage.length > 0) {
+      for (let i = 0; i < localStorage.length; i ++) {
+        if (localStorage.key(i) !== 'loglevel:webpack-dev-server') {
+          console.log(JSON.parse(localStorage.getItem(localStorage.key(i)))); //JSON.parse: string을 다시 object로 변환
+          this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+        }
+      }
+    }
+  },
+
 }
 </script>
 

@@ -16,8 +16,11 @@ export default {
   },
   methods: {
     addTodo: function() {
-      localStorage.setItem(this.newTodoItem, this.newTodoItem);
-      this.clearInput();
+      if (this.newTodoItem !== '') {  //공백일때는 값을 추가하지 않게 하는 로직
+        this.$emit('addTodoItem', this.newTodoItem);
+        this.clearInput();
+      }
+
     },
     clearInput: function() {
       this.newTodoItem = '';  //초기화 로직
@@ -29,6 +32,9 @@ export default {
 <style scoped>
   input:focus {
     outline: none;
+  }
+  i:hover {
+    cursor: pointer;
   }
   .inputBox {
     background: white;
