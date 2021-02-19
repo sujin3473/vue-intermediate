@@ -2,8 +2,12 @@
   <div id="app">
     <todo-header></todo-header>
     <todo-input v-on:addTodoItem="addOneItem"></todo-input>
-    <todo-list v-bind:propsdata="todoItems"></todo-list>
-    <todo-footer></todo-footer>
+    <todo-list
+      v-bind:propsdata="todoItems"
+      v-on:removeItem="removeOneItem"
+      v-on:toggleItem="toggleOneItem">
+    </todo-list>
+    <todo-footer v-on:clearAll="clearAllItems"></todo-footer>
   </div>
 </template>
 
@@ -29,9 +33,27 @@ export default {
   },
 
   methods: {
-    addOneItem: function() {
-      var obj = {completed: false, item: this.newTodoItem};
-      localStorage.setItem(this.newTodoItem, JSON.stringify(obj));  //객체를 string으로 변환해주는 api
+    addOneItem: function(todoItem) {
+      console.log(todoItem);
+      var obj = {completed: false, item: todoItem};
+      localStorage.setItem(todoItem, JSON.stringify(obj));  //객체를 string으로 변환해주는 api
+      this.todoItems.push(obj);
+    },
+
+    removeOneItem: function(todoItem, index) {
+      localStorage.removeItem(todoItem.item);
+      this.todoItems.splice(index, 1);
+    },
+
+    toggleOneItem: function(todoItem, index) {
+      this.todoItems[index].completed = !this.todoItems[index].completed;
+      localStorage.removeItem(todoItem.item);
+      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+    },
+
+    clearAllItems: function() {
+      localStorage.clear();
+      this.todoItems = [];
     }
   },
 
