@@ -9,7 +9,18 @@
       you can use custom content here to overwrite
       default content
     -->
-        <h3 slot="header">custom header</h3>
+        <h3 slot="header">
+          경고
+          <i class="closeModalBtn fas fa-times" @click="showModal = false"></i>
+        </h3>
+
+        <div slot="body">
+          무언가를 입력하세요.
+        </div>
+
+        <div slot="footer">
+          copyright
+        </div>
       </Modal>
     </span>
   </div>
@@ -31,11 +42,9 @@ export default {
         this.$emit('addTodoItem', this.newTodoItem);
         this.clearInput();
       }
-
       else {
-        alert('내용을 입력하세요.');
+        this.showModal = !this.showModal;
       }
-
     },
     clearInput: function() {
       this.newTodoItem = '';  //초기화 로직
@@ -75,5 +84,8 @@ export default {
     color: white;
     vertical-align: middle;
   }
-
+  .closeModalBtn {
+    color: #42b983;
+    float: right;
+  }
 </style>
