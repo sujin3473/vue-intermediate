@@ -6,13 +6,8 @@
 
 <script>
 export default {
-  data: function () {
-    return {
-
-    }
-  },
   methods: {
-    clearTodo: function () {
+    clearTodo () {
       this.$emit('clearAll');
     }
   }
