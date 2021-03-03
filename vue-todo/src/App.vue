@@ -33,13 +33,6 @@ export default {
   },
 
   methods: {
-    addOneItem(todoItem) {
-      console.log(todoItem);
-      const obj = {completed: false, item: todoItem};
-      localStorage.setItem(todoItem, JSON.stringify(obj));  //객체를 string으로 변환해주는 api
-      this.todoItems.push(obj);
-    },
-
     removeOneItem(todoItem, index) {
       localStorage.removeItem(todoItem.item);
       this.todoItems.splice(index, 1);

@@ -32,7 +32,9 @@ export default {
   methods: {
     addTodo() {
       if (this.newTodoItem !== '') {  //공백일때는 값을 추가하지 않게 하는 로직
-        this.$emit('addTodoItem', this.newTodoItem);
+        // this.$emit('addTodoItem', this.newTodoItem);
+        const text = this.newTodoItem.trim(); //trim() : 값의 앞뒤공백을 없애준다.
+        this.$store.commit('addOneItem', text);
         this.clearInput();
       }
       else {
