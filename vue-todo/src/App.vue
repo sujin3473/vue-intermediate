@@ -1,13 +1,9 @@
 <template>
   <div id="app">
     <todo-header></todo-header>
-    <todo-input v-on:addTodoItem="addOneItem"></todo-input>
-    <todo-list
-      v-bind:propsdata="todoItems"
-      v-on:removeItem="removeOneItem"
-      v-on:toggleItem="toggleOneItem">
-    </todo-list>
-    <todo-footer v-on:clearAll="clearAllItems"></todo-footer>
+    <todo-input></todo-input>
+    <todo-list></todo-list>
+    <todo-footer></todo-footer>
   </div>
 </template>
 
@@ -24,30 +20,6 @@ export default {
     TodoInput,
     TodoList,
     TodoFooter
-  },
-
-  data() {
-    return{
-      todoItems: []
-    }
-  },
-
-  methods: {
-    removeOneItem(todoItem, index) {
-      localStorage.removeItem(todoItem.item);
-      this.todoItems.splice(index, 1);
-    },
-
-    toggleOneItem(todoItem, index) {
-      this.todoItems[index].completed = !this.todoItems[index].completed;
-      localStorage.removeItem(todoItem.item);
-      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
-    },
-
-    clearAllItems() {
-      localStorage.clear();
-      this.todoItems = [];
-    }
   }
 }
 </script>
